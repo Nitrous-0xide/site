@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monster Ultra - Zero Sugar Maximum Power</title>
+    <meta name="description" content="Discover Monster Ultra Energy Drinks - Zero Sugar, Maximum Power, Incredible Taste. The ultimate fuel for champions.">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --monster-black: #000000;
+            --monster-white: #ffffff;
+            --monster-blue: #00a0dc;
+            --monster-silver: #c0c0c0;
+            --monster-green: #54c044;
+            --glow-color: rgba(0, 160, 220, 0.5);
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+            color: var(--monster-white);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Animated Background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .energy-wave {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--glow-color) 0%, transparent 70%);
+            animation: wave-pulse 8s ease-in-out infinite;
+            opacity: 0.3;
+        }
+
+        .energy-wave:nth-child(2) {
+            animation-delay: 2s;
+        }
+
+        .energy-wave:nth-child(3) {
+            animation-delay: 4s;
+        }
+
+        @keyframes wave-pulse {
+            0%, 100% {
+                transform: scale(0.8) translate(-50%, -50%);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.2) translate(-50%, -50%);
+                opacity: 0.3;
+            }
+        }
+
+        /* Header/Navigation */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 50px;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 2px solid var(--monster-blue);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            font-weight: 900;
+            color: var(--monster-white);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+
+        .logo span {
+            color: var(--monster-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--monster-white);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--monster-blue);
+            text-shadow: 0 0 10px var(--glow-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 100px 20px 50px;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .hero-text h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4em;
+            font-weight: 900;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-transform: uppercase;
+            animation: text-glow 2s ease-in-out infinite;
+        }
+
+        .hero-text h1 .ultra {
+            color: var(--monster-blue);
+            display: block;
+            font-size: 1.3em;
+        }
+
+        @keyframes text-glow {
+            0%, 100% {
+                text-shadow: 0 0 20px var(--glow-color);
+            }
+            50% {
+                text-shadow: 0 0 40px var(--glow-color), 0 0 60px var(--glow-color);
+            }
+        }
+
+        .hero-text p {
+            font-size: 1.5em;
+            margin-bottom: 30px;
+            color: var(--monster-silver);
+            font-weight: 300;
+        }
+
+        .tagline {
+            font-size: 2em;
+            color: var(--monster-blue);
+            font-weight: 700;
+            margin-bottom: 40px;
+            animation: slide-in 1s ease-out;
+        }
+
+        @keyframes slide-in {
+            from {
+                opacity: 0;
+                transform: translateX(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* 3D Can Animation */
+        .can-container {
+            perspective: 1200px;
+            position: relative;
+            width: 100%;
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .can-3d {
+            width: 300px;
+            height: 500px;
+            position: relative;
+            transform-style: preserve-3d;
+            animation: rotate-can 20s linear infinite;
+        }
+
+        .can-3d:hover {
+            animation-play-state: paused;
+        }
+
+        @keyframes rotate-can {
+            0% {
+                transform: rotateY(0deg) rotateX(5deg);
+            }
+            100% {
+                transform: rotateY(360deg) rotateX(5deg);
+            }
+        }
+
+        .can-image {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--monster-white) 0%, var(--monster-silver) 50%, var(--monster-white) 100%);
+            border-radius: 30px;
+            position: absolute;
+            box-shadow: 
+                0 0 40px rgba(0, 160, 220, 0.5),
+                inset 0 0 60px rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            font-weight: 900;
+            color: var(--monster-black);
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+            animation: can-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes can-pulse {
+            0%, 100% {
+                box-shadow: 
+                    0 0 40px rgba(0, 160, 220, 0.5),
+                    inset 0 0 60px rgba(255, 255, 255, 0.3);
+            }
+            50% {
+                box-shadow: 
+                    0 0 60px rgba(0, 160, 220, 0.8),
+                    0 0 100px rgba(0, 160, 220, 0.4),
+                    inset 0 0 80px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .monster-logo {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+        }
+
+        /* Energy Particles */
+        .energy-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: var(--monster-blue);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--glow-color);
+            animation: particle-float 6s ease-in-out infinite;
+        }
+
+        @keyframes particle-float {
+            0%, 100% {
+                transform: translate(0, 0) scale(1);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--tx), var(--ty)) scale(0);
+                opacity: 0;
+            }
+        }
+
+        /* Features Section */
+        .features {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3em;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 60px;
+            text-transform: uppercase;
+            color: var(--monster-blue);
+            text-shadow: 0 0 20px var(--glow-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--monster-blue);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 160, 220, 0.3);
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: icon-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes icon-bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .feature-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: var(--monster-blue);
+        }
+
+        .feature-card p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            color: var(--monster-silver);
+        }
+
+        /* Nutrition Section */
+        .nutrition {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, rgba(0, 160, 220, 0.1) 0%, transparent 100%);
+        }
+
+        .nutrition-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .nutrition-label {
+            background: rgba(0, 0, 0, 0.8);
+            border: 3px solid var(--monster-blue);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 0 40px rgba(0, 160, 220, 0.3);
+        }
+
+        .nutrition-header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 3px solid var(--monster-blue);
+            padding-bottom: 20px;
+        }
+
+        .nutrition-header h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .serving-size {
+            font-size: 1.3em;
+            color: var(--monster-silver);
+        }
+
+        .nutrition-facts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .nutrition-item {
+            background: rgba(0, 160, 220, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid var(--monster-blue);
+            transition: all 0.3s ease;
+        }
+
+        .nutrition-item:hover {
+            transform: scale(1.05);
+            background: rgba(0, 160, 220, 0.2);
+        }
+
+        .nutrition-item h3 {
+            font-size: 1.5em;
+            color: var(--monster-blue);
+            margin-bottom: 10px;
+        }
+
+        .nutrition-value {
+            font-size: 2.5em;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .nutrition-daily {
+            font-size: 1.1em;
+            color: var(--monster-silver);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 100px 50px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, rgba(0, 160, 220, 0.2) 0%, rgba(0, 0, 0, 0.5) 100%);
+            border: 2px solid var(--monster-blue);
+            border-radius: 20px;
+            padding: 40px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s ease;
+        }
+
+        .benefit-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, var(--glow-color), transparent);
+            animation: shine 3s linear infinite;
+            opacity: 0;
+        }
+
+        .benefit-card:hover::before {
+            opacity: 1;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .benefit-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: var(--monster-blue);
+            position: relative;
+            z-index: 1;
+        }
+
+        .benefit-card p {
+            font-size: 1.2em;
+            line-height: 1.8;
+            color: var(--monster-white);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Flavors Section */
+        .flavors {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.8) 0%, rgba(26, 26, 26, 0.8) 100%);
+        }
+
+        .flavors-container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .flavors-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 60px;
+        }
+
+        .flavor-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid var(--monster-blue);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: all 0.4s ease;
+            cursor: pointer;
+        }
+
+        .flavor-card:hover {
+            transform: translateY(-15px) scale(1.05);
+            box-shadow: 0 30px 60px rgba(0, 160, 220, 0.4);
+        }
+
+        .flavor-can {
+            width: 120px;
+            height: 200px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, var(--flavor-color-1), var(--flavor-color-2));
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-15px);
+            }
+        }
+
+        .flavor-card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5em;
+            margin-bottom: 10px;
+            color: var(--monster-white);
+        }
+
+        .flavor-card p {
+            color: var(--monster-silver);
+            font-size: 1.1em;
+        }
+
+        /* Call to Action */
+        .cta {
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5em;
+            margin-bottom: 30px;
+            color: var(--monster-blue);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse-glow {
+            0%, 100% {
+                text-shadow: 0 0 20px var(--glow-color);
+            }
+            50% {
+                text-shadow: 0 0 40px var(--glow-color), 0 0 60px var(--glow-color);
+            }
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 20px 60px;
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--monster-black);
+            background: linear-gradient(135deg, var(--monster-blue), var(--monster-green));
+            border: none;
+            border-radius: 50px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(0, 160, 220, 0.4);
+            cursor: pointer;
+        }
+
+        .cta-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 20px 50px rgba(0, 160, 220, 0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px 50px;
+            text-align: center;
+            border-top: 2px solid var(--monster-blue);
+        }
+
+        footer p {
+            color: var(--monster-silver);
+            font-size: 1.1em;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 809px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 2.5em;
+            }
+
+            .hero-text p {
+                font-size: 1.2em;
+            }
+
+            .tagline {
+                font-size: 1.5em;
+            }
+
+            .can-container {
+                height: 400px;
+            }
+
+            .can-3d {
+                width: 200px;
+                height: 350px;
+            }
+
+            .can-image {
+                font-size: 2em;
+            }
+
+            .section-title {
+                font-size: 2em;
+            }
+
+            .features-grid,
+            .benefits-grid,
+            .flavors-grid {
+                grid-template-columns: 1fr;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            .logo {
+                font-size: 1.5em;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .features,
+            .nutrition,
+            .benefits,
+            .flavors,
+            .cta {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-animation">
+        <div class="energy-wave"></div>
+        <div class="energy-wave"></div>
+        <div class="energy-wave"></div>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">MONSTER <span>ULTRA</span></div>
+            <ul class="nav-links">
+                <li><a href="#hero">Home</a></li>
+                <li><a href="#nutrition">Nutrition</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#flavors">Flavors</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>
+                    MONSTER
+                    <span class="ultra">ULTRA</span>
+                </h1>
+                <p class="tagline">ZERO SUGAR. MAXIMUM POWER.</p>
+                <p>Unleash the beast within with Monster Ultra - the ultimate energy drink that delivers incredible taste without the calories. Pure energy, pure performance.</p>
+            </div>
+            <div class="can-container">
+                <div class="can-3d">
+                    <div class="can-image">
+                        <div class="monster-logo">MONSTER</div>
+                    </div>
+                </div>
+                <div class="energy-particles">
+                    <!-- Particles will be generated by JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features">
+        <h2 class="section-title">ULTIMATE PERFORMANCE</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Zero Sugar</h3>
+                <p>All the energy you need without the sugar crash. Stay sharp, stay focused.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💪</div>
+                <h3>Maximum Energy</h3>
+                <p>Packed with powerful ingredients to fuel your most intense workouts and gaming sessions.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3>Laser Focus</h3>
+                <p>Enhanced mental clarity and focus to help you perform at your peak.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3>Incredible Taste</h3>
+                <p>Light, crisp, refreshing flavor that keeps you coming back for more.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Section -->
+    <section class="nutrition" id="nutrition">
+        <div class="nutrition-container">
+            <h2 class="section-title">NUTRITION FACTS</h2>
+            <div class="nutrition-label">
+                <div class="nutrition-header">
+                    <h2>Monster Ultra Energy Drink</h2>
+                    <p class="serving-size">Serving Size: 16 fl oz (473 mL)</p>
+                </div>
+                <div class="nutrition-facts">
+                    <div class="nutrition-item">
+                        <h3>Calories</h3>
+                        <div class="nutrition-value">0</div>
+                        <div class="nutrition-daily">Zero calories per can</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <h3>Sugar</h3>
+                        <div class="nutrition-value">0g</div>
+                        <div class="nutrition-daily">Absolutely zero sugar</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <h3>Caffeine</h3>
+                        <div class="nutrition-value">140mg</div>
+                        <div class="nutrition-daily">Optimal energy boost</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <h3>Vitamin B6</h3>
+                        <div class="nutrition-value">200%</div>
+                        <div class="nutrition-daily">Daily Value</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <h3>Vitamin B12</h3>
+                        <div class="nutrition-value">200%</div>
+                        <div class="nutrition-daily">Daily Value</div>
+                    </div>
+                    <div class="nutrition-item">
+                        <h3>Niacin</h3>
+                        <div class="nutrition-value">200%</div>
+                        <div class="nutrition-daily">Daily Value</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section class="benefits" id="benefits">
+        <h2 class="section-title">WHY MONSTER ULTRA?</h2>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <h3>🚀 Sustained Energy</h3>
+                <p>Our advanced energy blend provides smooth, long-lasting energy without the jitters or crash. Perfect for gaming marathons, intense workouts, or long work sessions.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>🧠 Mental Clarity</h3>
+                <p>Enhanced with B-vitamins and natural caffeine to sharpen your focus and improve cognitive performance. Stay alert and make split-second decisions with confidence.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>💯 Zero Guilt</h3>
+                <p>All the taste and energy you crave with zero sugar and zero calories. Enjoy Monster Ultra guilt-free and stay on track with your health goals.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>⚡ Quick Absorption</h3>
+                <p>Rapidly absorbed formula gets to work fast, delivering energy when you need it most. Feel the power within minutes of your first sip.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>💪 Performance Boost</h3>
+                <p>Trusted by athletes, gamers, and professionals worldwide. Monster Ultra helps you push your limits and achieve peak performance every time.</p>
+            </div>
+            <div class="benefit-card">
+                <h3>🎮 Gaming Edge</h3>
+                <p>Enhanced reaction time and sustained focus give you the competitive advantage. Level up your game with Monster Ultra's powerful formula.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Flavors Section -->
+    <section class="flavors" id="flavors">
+        <div class="flavors-container">
+            <h2 class="section-title">EPIC FLAVORS</h2>
+            <div class="flavors-grid">
+                <div class="flavor-card">
+                    <div class="flavor-can" style="--flavor-color-1: #ffffff; --flavor-color-2: #e0e0e0;"></div>
+                    <h3>Ultra White</h3>
+                    <p>Light Citrus</p>
+                </div>
+                <div class="flavor-card">
+                    <div class="flavor-can" style="--flavor-color-1: #00a0dc; --flavor-color-2: #0080c0;"></div>
+                    <h3>Ultra Blue</h3>
+                    <p>Blue Raspberry</p>
+                </div>
+                <div class="flavor-card">
+                    <div class="flavor-can" style="--flavor-color-1: #ff6b6b; --flavor-color-2: #ee5a52;"></div>
+                    <h3>Ultra Red</h3>
+                    <p>Cherry Citrus</p>
+                </div>
+                <div class="flavor-card">
+                    <div class="flavor-can" style="--flavor-color-1: #9b59b6; --flavor-color-2: #8e44ad;"></div>
+                    <h3>Ultra Violet</h3>
+                    <p>Grape Citrus</p>
+                </div>
+                <div class="flavor-card">
+                    <div class="flavor-can" style="--flavor-color-1: #e74c3c; --flavor-color-2: #c0392b;"></div>
+                    <h3>Ultra Sunrise</h3>
+                    <p>Orange Sunrise</p>
+                </div>
+                <div class="flavor-card">
+                    <div class="flavor-can" style="--flavor-color-1: #27ae60; --flavor-color-2: #229954;"></div>
+                    <h3>Ultra Paradise</h3>
+                    <p>Kiwi Lime</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta">
+        <h2>UNLEASH THE BEAST</h2>
+        <p style="font-size: 1.3em; color: var(--monster-silver); margin-bottom: 40px;">
+            Join millions of Monster Ultra fans worldwide and experience the ultimate zero sugar energy drink.
+        </p>
+        <a href="#hero" class="cta-button">Get Energized</a>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Monster Ultra Fan Page - Unleash Your Potential</p>
+        <p style="margin-top: 10px; font-size: 0.9em;">This is a fan-made tribute page. Monster Energy® is a registered trademark.</p>
+    </footer>
+
+    <!-- JavaScript for Animations and Interactions -->
+    <script>
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Generate Energy Particles
+        const particlesContainer = document.querySelector('.energy-particles');
+        for (let i = 0; i < 30; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.setProperty('--tx', (Math.random() - 0.5) * 400 + 'px');
+            particle.style.setProperty('--ty', (Math.random() - 0.5) * 400 + 'px');
+            particle.style.animationDelay = Math.random() * 6 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Parallax Effect on Scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallaxElements = document.querySelectorAll('.can-3d, .energy-wave');
+            
+            parallaxElements.forEach((element, index) => {
+                const speed = (index + 1) * 0.1;
+                element.style.transform = `translateY(${scrolled * speed}px)`;
+            });
+        });
+
+        // Intersection Observer for Fade-in Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe feature cards, nutrition items, and benefit cards
+        document.querySelectorAll('.feature-card, .nutrition-item, .benefit-card, .flavor-card').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Can hover effect enhancement
+        const can3d = document.querySelector('.can-3d');
+        can3d.addEventListener('mouseenter', () => {
+            can3d.style.animationPlayState = 'paused';
+        });
+
+        can3d.addEventListener('mouseleave', () => {
+            can3d.style.animationPlayState = 'running';
+        });
+
+        // Add click effect to CTA button
+        const ctaButton = document.querySelector('.cta-button');
+        ctaButton.addEventListener('click', (e) => {
+            // Create ripple effect
+            const ripple = document.createElement('span');
+            ripple.style.position = 'absolute';
+            ripple.style.borderRadius = '50%';
+            ripple.style.background = 'rgba(255, 255, 255, 0.6)';
+            ripple.style.width = ripple.style.height = '100px';
+            ripple.style.left = e.offsetX - 50 + 'px';
+            ripple.style.top = e.offsetY - 50 + 'px';
+            ripple.style.animation = 'ripple 0.6s ease-out';
+            
+            ctaButton.style.position = 'relative';
+            ctaButton.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+
+        // Add ripple animation
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: scale(4);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>
