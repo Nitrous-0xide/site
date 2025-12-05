@@ -7,20 +7,67 @@
 
 <style>
     :root {
-        --bg: #0f0f11;
+        --bg: #0c0c0e;
         --fg: #ffffff;
         --accent: #4f80ff;
-        --card: #18181b;
+        --accent2: #7b3ff2;
+        --card: #16161a;
         --radius: 14px;
+        --glow: 0 0 12px rgba(79, 128, 255, 0.4);
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); }
+    }
+
+    @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes glow-pulse {
+        0%, 100% { box-shadow: 0 0 20px rgba(79, 128, 255, 0.3); }
+        50% { box-shadow: 0 0 40px rgba(79, 128, 255, 0.6); }
+    }
+
+    @keyframes rotate {
+        100% { transform: rotate(360deg); }
+    }
+
+    @keyframes trail-fade {
+        to {
+            transform: scale(3);
+            opacity: 0;
+        }
     }
 
     * {margin:0; padding:0; box-sizing:border-box; font-family: "Inter", sans-serif;}
 
     body {
-        background: var(--bg);
+        background: linear-gradient(135deg, #0c0c0e 0%, #1a0e2e 50%, #0c0c0e 100%);
+        background-size: 400% 400%;
+        animation: gradient-shift 15s ease infinite;
         color: var(--fg);
         line-height: 1.6;
         scroll-behavior: smooth;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 50%, rgba(79, 128, 255, 0.15) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(123, 63, 242, 0.15) 0%, transparent 50%);
+        pointer-events: none;
+        z-index: 0;
     }
 
     header {
@@ -29,12 +76,25 @@
         top:0;
         left:0;
         padding: 20px 40px;
-        background: rgba(0,0,0,0.4);
-        backdrop-filter: blur(10px);
+        background: rgba(12, 12, 14, 0.7);
+        backdrop-filter: blur(20px);
         display: flex;
         justify-content: space-between;
         align-items: center;
         z-index: 999;
+        border-bottom: 1px solid rgba(79, 128, 255, 0.2);
+        transition: all 0.3s ease;
+    }
+
+    header.scrolled {
+        padding: 15px 40px;
+        background: rgba(12, 12, 14, 0.9);
+        box-shadow: 0 4px 30px rgba(79, 128, 255, 0.1);
+    }
+
+    header h3 {
+        font-weight: 600;
+        letter-spacing: 1px;
     }
 
     header a {
@@ -47,6 +107,7 @@
 
     header a:hover {
         color: var(--accent);
+        text-shadow: var(--glow);
     }
 
     .hero {
@@ -56,44 +117,103 @@
         align-items:center;
         text-align:center;
         padding: 40px;
+        transition: all 0.3s ease;
     }
 
     .hero h1 {
-        font-size: 3rem;
+        font-size: 3.3rem;
         margin-bottom: 10px;
+        background: linear-gradient(135deg, #ffffff 0%, #4f80ff 50%, #7b3ff2 100%);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradient-shift 8s ease infinite;
+    }
+
+    .hero h1 span {
+        display: inline-block;
+        animation: float 3s ease-in-out infinite;
     }
 
     .hero p {
         color: #d1d1d1;
         max-width: 600px;
-        margin: 0 auto 20px;
+        margin: 0 auto 25px;
+        font-size: 1.1rem;
     }
 
     button {
         padding: 12px 26px;
         border-radius: var(--radius);
         border: none;
-        background: var(--accent);
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+        background-size: 200% 200%;
         color: white;
         cursor: pointer;
         font-size: 1rem;
         font-weight: 600;
-        transition: 0.3s;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 20px rgba(79, 128, 255, 0.4);
+        position: relative;
+        overflow: hidden;
+    }
+
+    button::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+        transition: left 0.5s;
+    }
+
+    button:hover::before {
+        left: 100%;
     }
 
     button:hover {
-        opacity: 0.8;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 30px rgba(79, 128, 255, 0.6);
+        animation: glow-pulse 2s ease-in-out infinite;
     }
 
     section {
         padding: 100px 40px;
         max-width: 1100px;
         margin: auto;
+        position: relative;
+        z-index: 1;
     }
 
     h2 {
         font-size: 2.2rem;
         margin-bottom: 20px;
+        color: white;
+    }
+
+    /* About Grid */
+    .about-box {
+        background: linear-gradient(135deg, rgba(22, 22, 26, 0.8) 0%, rgba(79, 128, 255, 0.1) 100%);
+        padding: 25px;
+        border-radius: var(--radius);
+        line-height: 1.8;
+        border: 1px solid rgba(79, 128, 255, 0.3);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+    }
+
+    .about-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 40px rgba(79, 128, 255, 0.3);
+        border-color: rgba(79, 128, 255, 0.5);
+    }
+
+    .about-box span {
+        color: var(--accent);
+        font-weight: 600;
     }
 
     /* Projects Grid */
@@ -104,25 +224,117 @@
     }
 
     .project-card {
-        background: var(--card);
+        background: linear-gradient(135deg, rgba(22, 22, 26, 0.8) 0%, rgba(79, 128, 255, 0.05) 100%);
         padding: 20px;
         border-radius: var(--radius);
-        transition: 0.3s;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         cursor: pointer;
+        border: 1px solid rgba(79, 128, 255, 0.2);
+        backdrop-filter: blur(10px);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .project-card::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, rgba(79, 128, 255, 0.1) 0%, transparent 70%);
+        opacity: 0;
+        transition: opacity 0.4s ease;
+    }
+
+    .project-card:hover::before {
+        opacity: 1;
     }
 
     .project-card:hover {
-        transform: translateY(-5px);
+        transform: translateY(-10px) scale(1.02);
+        box-shadow: 0 15px 50px rgba(79, 128, 255, 0.4);
+        border-color: rgba(79, 128, 255, 0.6);
     }
 
     .project-card h3 {
         margin-bottom: 10px;
-        color: var(--accent);
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        position: relative;
+        z-index: 1;
     }
 
     .project-card p {
         color: #c3c3c3;
         font-size: 0.95rem;
+    }
+
+    /* Discord Invite Section */
+    .discord-box {
+        background: linear-gradient(135deg, rgba(32, 32, 40, 0.9) 0%, rgba(79, 128, 255, 0.15) 100%);
+        border-radius: var(--radius);
+        padding: 35px;
+        text-align: center;
+        border: 2px solid rgba(79, 128, 255, 0.3);
+        box-shadow: 0 0 40px rgba(79, 128, 255, 0.25);
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .discord-box::before {
+        content: '';
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(from 0deg, transparent, rgba(79, 128, 255, 0.3), transparent 30%);
+        animation: rotate 4s linear infinite;
+    }
+
+    .discord-box:hover {
+        transform: scale(1.02);
+        box-shadow: 0 0 60px rgba(79, 128, 255, 0.4);
+        border-color: rgba(79, 128, 255, 0.5);
+    }
+
+    .discord-box p {
+        position: relative;
+        z-index: 1;
+    }
+
+    .discord-box a {
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        font-weight: 600;
+        text-decoration: none;
+        font-size: 1.2rem;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 1;
+        display: inline-block;
+    }
+
+    .discord-box a::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+        transition: width 0.3s ease;
+    }
+
+    .discord-box a:hover::after {
+        width: 100%;
     }
 
     /* Contact */
@@ -135,28 +347,49 @@
 
     input, textarea {
         padding: 12px;
-        background: #121214;
-        border: 1px solid #2a2a2d;
+        background: rgba(18, 18, 20, 0.8);
+        border: 1px solid rgba(79, 128, 255, 0.3);
         border-radius: var(--radius);
         color: var(--fg);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    input:focus, textarea:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 20px rgba(79, 128, 255, 0.3);
+        transform: translateY(-2px);
     }
 
     footer {
         text-align:center;
         padding: 40px;
         color: #9a9a9a;
+        margin-top: 40px;
     }
 
-    /* Fade-in Animation */
+    /* Fade Animation */
     .fade {
         opacity: 0;
-        transform: translateY(20px);
-        transition: 0.8s ease;
+        transform: translateY(40px);
+        transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .fade.show {
         opacity: 1;
         transform: translateY(0);
+    }
+
+    .cursor-trail {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: radial-gradient(circle, rgba(79, 128, 255, 0.6), transparent);
+        border-radius: 50%;
+        pointer-events: none;
+        animation: trail-fade 1s ease-out forwards;
+        z-index: 9999;
     }
 </style>
 </head>
@@ -164,10 +397,11 @@
 <body>
 
 <header>
-    <h3>My Portfolio</h3>
+    <h3>waterytoast43</h3>
     <nav>
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
+        <a href="#discord">Discord</a>
         <a href="#contact">Contact</a>
     </nav>
 </header>
@@ -175,7 +409,7 @@
 <section class="hero fade">
     <div>
         <h1>Hello, I'm <span style="color: var(--accent);">waterytoast43</span></h1>
-        <p>I do coding sometimes</p>
+        <p>I do coding sometimes — Python, Lua, C#, and <b>I hate C++</b> with a passion.</p>
         <button onclick="document.querySelector('#projects').scrollIntoView({behavior:'smooth'})">
             View Projects
         </button>
@@ -184,12 +418,12 @@
 
 <section id="about" class="fade">
     <h2>About Me</h2>
-    <p>
-        python cool 
-        lua cool
-        c# cool
-        fuck c++
-    </p>
+    <div class="about-box">
+        <p><span>python</span> cool<br>
+        <span>lua</span> cool<br>
+        <span>c#</span> cool<br>
+        fuck c++ 🚫🔥</p>
+    </div>
 </section>
 
 <section id="projects" class="fade">
@@ -197,8 +431,18 @@
     <div class="projects">
         <div class="project-card">
             <h3>SYNAPSE X (v3)</h3>
-            <p>I contributed on the revival of our beloved synapse.</p>
+            <p>I contributed to the revival of the legendary Synapse project.</p>
         </div>
+    </div>
+</section>
+
+<section id="discord" class="fade">
+    <h2>Join the Project Discord</h2>
+    <div class="discord-box">
+        <p>Want updates, help, or to join the community?</p>
+        <a href="https://discord.gg/TUYg7YV5Q6" target="_blank">
+            👉 Click here to join the Discord server
+        </a>
     </div>
 </section>
 
@@ -221,22 +465,66 @@
     const fades = document.querySelectorAll('.fade');
 
     function reveal() {
-        const trigger = window.innerHeight * 0.88;
+        const trigger = window.innerHeight * 0.85;
         fades.forEach(el => {
             const top = el.getBoundingClientRect().top;
             if (top < trigger) el.classList.add('show');
         });
     }
 
-    window.addEventListener('scroll', reveal);
+    // Header scroll effect
+    const header = document.querySelector('header');
+    function handleScroll() {
+        if (window.scrollY > 50) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        reveal();
+        handleScroll();
+    });
     window.addEventListener('load', reveal);
 
-    // simple demo contact form handling
+    // Smooth parallax effect for hero
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        const hero = document.querySelector('.hero');
+        if (hero && scrolled < window.innerHeight) {
+            hero.style.transform = `translateY(${scrolled * 0.5}px)`;
+            hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.8;
+        }
+    });
+
     function submitForm(e) {
         e.preventDefault();
-        alert("Message sent!");
-        e.target.reset();
+        const btn = e.target.querySelector('button');
+        const originalText = btn.textContent;
+        btn.textContent = 'Sending...';
+        btn.style.background = 'linear-gradient(135deg, #28a745 0%, #20c997 100%)';
+        
+        setTimeout(() => {
+            btn.textContent = '✓ Sent!';
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.style.background = '';
+                e.target.reset();
+            }, 2000);
+        }, 1000);
     }
+
+    // Animated cursor trail effect (subtle)
+    document.addEventListener('mousemove', (e) => {
+        const trail = document.createElement('div');
+        trail.className = 'cursor-trail';
+        trail.style.left = e.pageX + 'px';
+        trail.style.top = e.pageY + 'px';
+        document.body.appendChild(trail);
+        
+        setTimeout(() => trail.remove(), 1000);
+    });
 </script>
 
 </body>
