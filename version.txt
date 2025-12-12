@@ -1,1 +1,1 @@
-0.8
+[PRERELEASE] 1.0
