@@ -12,293 +12,262 @@
         --fg: #ffffff;
         --accent: #a855f7;
         --accent2: #7c3aed;
-        --accent3: #c084fc;
         --card: #13131a;
-        --radius: 16px;
+        --border: rgba(255, 255, 255, 0.08);
+        --text-muted: #94a3b8;
     }
 
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-15px); }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
     }
-
-    @keyframes gradient-shift {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
-
-    @keyframes glow-pulse {
-        0%, 100% { 
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.4);
-            border-color: rgba(168, 85, 247, 0.4);
-        }
-        50% { 
-            box-shadow: 0 0 30px rgba(168, 85, 247, 0.6);
-            border-color: rgba(168, 85, 247, 0.6);
-        }
-    }
-
-    @keyframes shimmer {
-        0% { background-position: -1000px 0; }
-        100% { background-position: 1000px 0; }
-    }
-
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    * {margin: 0; padding: 0; box-sizing: border-box; font-family: "Inter", sans-serif;}
 
     body {
-        background: linear-gradient(135deg, #0a0a0f 0%, #1a0f2e 50%, #0a0a0f 100%);
-        background-size: 400% 400%;
-        animation: gradient-shift 20s ease infinite;
+        background: var(--bg);
         color: var(--fg);
         line-height: 1.6;
-        scroll-behavior: smooth;
-        position: relative;
         overflow-x: hidden;
+        cursor: none;
     }
 
-    body::before {
-        content: '';
+    /* Custom Cursor */
+    .cursor {
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--accent);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transition: all 0.1s ease;
+        mix-blend-mode: difference;
+    }
+
+    .cursor-follower {
+        width: 8px;
+        height: 8px;
+        background: var(--accent);
+        border-radius: 50%;
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        transition: all 0.15s ease;
+    }
+
+    /* Animated Background */
+    .bg-gradient {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
-        background: 
-            radial-gradient(circle at 20% 30%, rgba(168, 85, 247, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 80% 70%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
-            radial-gradient(circle at 50% 50%, rgba(192, 132, 252, 0.08) 0%, transparent 60%);
         pointer-events: none;
         z-index: 0;
     }
 
+    .gradient-orb {
+        position: absolute;
+        border-radius: 50%;
+        filter: blur(100px);
+        opacity: 0;
+        transition: opacity 0.5s;
+    }
+
+    /* Scroll Animations */
+    .fade-in {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .fade-in.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .slide-left {
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .slide-left.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .slide-right {
+        opacity: 0;
+        transform: translateX(50px);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .slide-right.visible {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    .scale-in {
+        opacity: 0;
+        transform: scale(0.9);
+        transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .scale-in.visible {
+        opacity: 1;
+        transform: scale(1);
+    }
+
     header {
-        width: 100%;
         position: fixed;
         top: 0;
         left: 0;
-        padding: 20px 40px;
-        background: rgba(10, 10, 15, 0.8);
-        backdrop-filter: blur(20px) saturate(180%);
+        right: 0;
+        padding: 20px 5%;
         display: flex;
         justify-content: space-between;
         align-items: center;
         z-index: 999;
-        border-bottom: 1px solid rgba(168, 85, 247, 0.2);
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        background: rgba(10, 10, 15, 0);
+        backdrop-filter: blur(0px);
+        border-bottom: 1px solid transparent;
+        transition: all 0.3s ease;
     }
 
     header.scrolled {
-        padding: 15px 40px;
-        background: rgba(10, 10, 15, 0.95);
-        box-shadow: 0 8px 32px rgba(168, 85, 247, 0.15);
+        background: rgba(10, 10, 15, 0.8);
+        backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border);
     }
 
     header h3 {
-    font-weight: 800;
-    letter-spacing: 3px;
-    font-size: 1.6rem;
-
-    /* Fallback color (important) */
-    color: #e9d5ff;
-
-    background: linear-gradient(
-        135deg,
-        #ffffff 0%,
-        var(--accent3) 30%,
-        var(--accent) 60%,
-        var(--accent2) 100%
-    );
-    background-size: 200% 200%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-
-    animation: gradient-shift 6s ease infinite;
-
-    /* THIS fixes the visibility issue */
-    text-shadow:
-        0 0 6px rgba(0, 0, 0, 0.9),
-        0 0 18px rgba(168, 85, 247, 0.7),
-        0 0 35px rgba(168, 85, 247, 0.6);
+        font-weight: 700;
+        font-size: 1.5rem;
+        letter-spacing: -0.5px;
+        background: linear-gradient(135deg, #fff 0%, var(--accent) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
+    nav {
+        display: flex;
+        gap: 32px;
+    }
 
-    header a {
-        color: var(--fg);
-        margin-left: 30px;
+    nav a {
+        color: var(--text-muted);
         text-decoration: none;
         font-weight: 500;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        font-size: 0.95rem;
+        transition: color 0.2s;
         position: relative;
     }
 
-    header a::after {
+    nav a:hover {
+        color: var(--fg);
+    }
+
+    nav a::after {
         content: '';
         position: absolute;
-        bottom: -5px;
+        bottom: -4px;
         left: 0;
         width: 0;
         height: 2px;
-        background: linear-gradient(90deg, var(--accent), var(--accent2));
-        transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        background: var(--accent);
+        transition: width 0.3s ease;
     }
 
-    header a:hover {
-        color: var(--accent3);
-    }
-
-    header a:hover::after {
+    nav a:hover::after {
         width: 100%;
     }
 
     .hero {
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
+        flex-direction: column;
         justify-content: center;
         align-items: center;
         text-align: center;
-        padding: 40px;
+        padding: 120px 5% 80px;
         position: relative;
-    }
-
-    .hero::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 500px;
-        height: 500px;
-        background: radial-gradient(circle, rgba(168, 85, 247, 0.3) 0%, transparent 70%);
-        filter: blur(80px);
-        animation: float 6s ease-in-out infinite;
-        pointer-events: none;
-    }
-
-    .hero > div {
-        position: relative;
-        z-index: 1;
-    }
-
-    .hero img {
-        width: 150px;
-        height: auto;
-        filter: drop-shadow(0 0 30px rgba(168, 85, 247, 0.6));
-        animation: float 4s ease-in-out infinite;
-    }
-
-    .hero h1 {
-    font-size: 5rem;
-    margin: 20px 0 10px;
-    font-weight: 900;
-    letter-spacing: 4px;
-
-    /* SOLID fallback color */
-    color: #f5e9ff;
-
-    /* Gradient overlay */
-    background: linear-gradient(
-        135deg,
-        #ffffff 0%,
-        #e9d5ff 25%,
-        var(--accent3) 50%,
-        var(--accent) 75%,
-        var(--accent2) 100%
-    );
-    background-size: 200% 200%;
-
-    /* Gradient text WITHOUT hiding the fill */
-    -webkit-background-clip: text;
-    background-clip: text;
-
-    animation: gradient-shift 8s ease infinite;
-
-    /* HARD visibility */
-    text-shadow:
-        0 0 2px rgba(0,0,0,1),
-        0 0 10px rgba(168,85,247,0.8),
-        0 0 25px rgba(168,85,247,0.7),
-        0 0 50px rgba(168,85,247,0.6);
-
-    /* Outline so it never blends */
-    -webkit-text-stroke: 1px rgba(255,255,255,0.35);
-    }
-
-
-    .hero h1 span {
-        display: inline-block;
-        animation: float 3s ease-in-out infinite;
-        animation-delay: 0.2s;
-    }
-
-    .hero .subtitle {
-        color: var(--accent3);
-        font-size: 1.4rem;
-        margin-bottom: 15px;
-        font-weight: 600;
-        letter-spacing: 1px;
-    }
-
-    .hero p {
-        color: #b4b4b4;
-        max-width: 650px;
-        margin: 0 auto 30px;
-        font-size: 1.1rem;
-        line-height: 1.8;
     }
 
     .status-badge {
-        display: inline-block;
-        padding: 10px 24px;
-        background: linear-gradient(135deg, rgba(34, 197, 94, 0.25) 0%, rgba(34, 197, 94, 0.1) 100%);
-        border: 2px solid rgba(34, 197, 94, 0.5);
-        border-radius: 50px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: rgba(34, 197, 94, 0.1);
+        border: 1px solid rgba(34, 197, 94, 0.3);
+        border-radius: 100px;
         color: #22c55e;
-        font-weight: 700;
-        margin-bottom: 25px;
-        animation: glow-pulse 3s ease-in-out infinite;
-        font-size: 0.95rem;
-        letter-spacing: 1px;
-        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.875rem;
+        margin-bottom: 24px;
     }
 
     .status-badge::before {
-        content: '●';
-        margin-right: 10px;
-        font-size: 1.2rem;
+        content: '';
+        width: 6px;
+        height: 6px;
+        background: #22c55e;
+        border-radius: 50%;
+        animation: pulse 2s infinite;
     }
 
-    button {
-        padding: 16px 40px;
-        border-radius: var(--radius);
+    @keyframes pulse {
+        0%, 100% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.2); }
+    }
+
+    .hero h1 {
+        font-size: clamp(3rem, 8vw, 5rem);
+        font-weight: 700;
+        letter-spacing: -2px;
+        margin-bottom: 16px;
+        line-height: 1.1;
+    }
+
+    .hero .subtitle {
+        color: var(--text-muted);
+        font-size: clamp(1.125rem, 2vw, 1.25rem);
+        margin-bottom: 24px;
+        font-weight: 500;
+    }
+
+    .hero p {
+        color: var(--text-muted);
+        max-width: 600px;
+        margin: 0 auto 40px;
+        font-size: 1.0625rem;
+        line-height: 1.7;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    button, .btn {
+        padding: 14px 32px;
+        border-radius: 12px;
         border: none;
-        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-        color: white;
-        cursor: pointer;
-        font-size: 1.1rem;
+        font-size: 1rem;
         font-weight: 600;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 30px rgba(168, 85, 247, 0.4);
+        cursor: none;
+        transition: all 0.3s;
+        text-decoration: none;
+        display: inline-block;
         position: relative;
         overflow: hidden;
-        margin: 0 10px;
-        text-transform: uppercase;
-        letter-spacing: 1px;
     }
 
-    button::before {
+    button::before, .btn::before {
         content: '';
         position: absolute;
         top: 50%;
@@ -306,171 +275,141 @@
         width: 0;
         height: 0;
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.3);
+        background: rgba(255, 255, 255, 0.2);
         transform: translate(-50%, -50%);
         transition: width 0.6s, height 0.6s;
     }
 
-    button:hover::before {
+    button:hover::before, .btn:hover::before {
         width: 300px;
         height: 300px;
     }
 
-    button:hover {
-        transform: translateY(-4px) scale(1.05);
-        box-shadow: 0 12px 40px rgba(168, 85, 247, 0.6);
+    button.primary, .btn.primary {
+        background: var(--accent);
+        color: white;
     }
 
-    button:active {
-        transform: translateY(-2px) scale(1.02);
+    button.primary:hover, .btn.primary:hover {
+        background: var(--accent2);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 30px rgba(168, 85, 247, 0.4);
     }
 
-    button.secondary {
+    button.secondary, .btn.secondary {
         background: transparent;
-        border: 2px solid var(--accent);
-        color: var(--accent);
-        box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+        border: 1px solid var(--border);
+        color: var(--fg);
     }
 
-    button.secondary:hover {
+    button.secondary:hover, .btn.secondary:hover {
+        border-color: var(--accent);
         background: rgba(168, 85, 247, 0.1);
-        box-shadow: 0 0 40px rgba(168, 85, 247, 0.4);
     }
 
     section {
-        padding: 120px 40px;
-        max-width: 1300px;
-        margin: auto;
+        padding: 100px 5%;
+        max-width: 1400px;
+        margin: 0 auto;
         position: relative;
         z-index: 1;
     }
 
     h2 {
-        font-size: 3rem;
-        margin-bottom: 20px;
-        color: white;
+        font-size: clamp(2rem, 4vw, 2.5rem);
+        font-weight: 700;
+        letter-spacing: -1px;
+        margin-bottom: 16px;
         text-align: center;
-        font-weight: 800;
-        letter-spacing: 2px;
-        background: linear-gradient(135deg, #ffffff 0%, var(--accent3) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    h2::after {
-        content: '';
-        display: block;
-        width: 100px;
-        height: 5px;
-        background: linear-gradient(90deg, var(--accent) 0%, var(--accent2) 100%);
-        margin: 20px auto;
-        border-radius: 10px;
-        box-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
     }
 
     .section-subtitle {
         text-align: center;
-        color: #a0a0a0;
-        font-size: 1.2rem;
-        margin-bottom: 60px;
-        letter-spacing: 0.5px;
+        color: var(--text-muted);
+        font-size: 1.0625rem;
+        margin-bottom: 64px;
     }
 
-    .features {
+    .grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 30px;
-        margin-top: 50px;
+        gap: 24px;
     }
 
-    .feature-card {
-        background: linear-gradient(135deg, rgba(19, 19, 26, 0.95) 0%, rgba(168, 85, 247, 0.05) 100%);
-        padding: 35px;
-        border-radius: var(--radius);
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 2px solid rgba(168, 85, 247, 0.2);
-        backdrop-filter: blur(10px);
+    .card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 32px;
+        transition: all 0.3s;
         position: relative;
-        overflow: hidden;
-        animation: fadeInUp 0.8s ease-out;
     }
 
-    .feature-card::before {
+    .card::before {
         content: '';
         position: absolute;
         top: 0;
-        left: -100%;
+        left: 0;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(168, 85, 247, 0.15), transparent);
-        transition: left 0.8s;
+        background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(168, 85, 247, 0.1) 0%, transparent 50%);
+        opacity: 0;
+        transition: opacity 0.3s;
+        border-radius: 16px;
+        pointer-events: none;
     }
 
-    .feature-card:hover::before {
-        left: 100%;
+    .card:hover::before {
+        opacity: 1;
     }
 
-    .feature-card:hover {
-        transform: translateY(-12px) scale(1.02);
-        box-shadow: 0 20px 60px rgba(168, 85, 247, 0.5);
-        border-color: rgba(168, 85, 247, 0.6);
+    .card:hover {
+        border-color: rgba(168, 85, 247, 0.3);
+        transform: translateY(-4px);
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
     }
 
-    .feature-icon {
-        font-size: 3rem;
-        margin-bottom: 20px;
+    .card-icon {
+        font-size: 2rem;
+        margin-bottom: 16px;
         display: block;
-        filter: drop-shadow(0 0 15px rgba(168, 85, 247, 0.6));
     }
 
-    .feature-card h3 {
-        margin-bottom: 15px;
-        background: linear-gradient(135deg, var(--accent3) 0%, var(--accent) 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        font-size: 1.5rem;
-        font-weight: 700;
-        letter-spacing: 1px;
+    .card h3 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 16px;
+        letter-spacing: -0.5px;
     }
 
-    .feature-card ul {
-        color: #d0d0d0;
-        font-size: 1rem;
+    .card ul {
         list-style: none;
         padding: 0;
+        color: var(--text-muted);
+        font-size: 0.9375rem;
     }
 
-    .feature-card ul li {
-        padding: 10px 0;
-        padding-left: 30px;
+    .card ul li {
+        padding: 8px 0;
+        padding-left: 24px;
         position: relative;
-        transition: all 0.3s ease;
     }
 
-    .feature-card ul li::before {
-        content: '✓';
+    .card ul li::before {
+        content: '→';
         position: absolute;
         left: 0;
         color: var(--accent);
         font-weight: bold;
-        font-size: 1.2rem;
-    }
-
-    .feature-card:hover ul li {
-        padding-left: 35px;
-        color: #ffffff;
     }
 
     .comparison-table {
         max-width: 900px;
-        margin: 50px auto;
-        background: linear-gradient(135deg, rgba(19, 19, 26, 0.95) 0%, rgba(168, 85, 247, 0.05) 100%);
-        border-radius: var(--radius);
+        margin: 0 auto;
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid var(--border);
+        border-radius: 16px;
         overflow: hidden;
-        border: 2px solid rgba(168, 85, 247, 0.3);
-        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
     }
 
     .comparison-table table {
@@ -479,241 +418,152 @@
     }
 
     .comparison-table thead {
-        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+        background: rgba(255, 255, 255, 0.05);
     }
 
-    .comparison-table thead th {
-        padding: 25px 20px;
-        font-size: 1.3rem;
-        font-weight: 700;
-        color: white;
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .comparison-table thead th:first-child {
-        text-align: left;
-        padding-left: 40px;
-    }
-
-    .comparison-table tbody tr {
-        border-bottom: 1px solid rgba(168, 85, 247, 0.1);
-        transition: all 0.3s ease;
-    }
-
-    .comparison-table tbody tr:hover {
-        background: rgba(168, 85, 247, 0.08);
-    }
-
-    .comparison-table tbody td {
+    .comparison-table th {
         padding: 20px;
+        font-size: 0.9375rem;
+        font-weight: 600;
         text-align: center;
-        font-size: 1rem;
     }
 
-    .comparison-table tbody td:first-child {
+    .comparison-table th:first-child {
         text-align: left;
-        padding-left: 40px;
-        font-weight: 500;
-        color: #e0e0e0;
     }
 
-    .comparison-table .check {
+    .comparison-table td {
+        padding: 16px 20px;
+        text-align: center;
+        border-top: 1px solid var(--border);
+        font-size: 0.9375rem;
+    }
+
+    .comparison-table td:first-child {
+        text-align: left;
+        color: var(--text-muted);
+    }
+
+    .check {
         color: #22c55e;
-        font-size: 1.5rem;
-        font-weight: bold;
+        font-size: 1.25rem;
     }
 
-    .comparison-table .cross {
+    .cross {
         color: #ef4444;
-        font-size: 1.5rem;
-        font-weight: bold;
+        font-size: 1.25rem;
     }
 
-    .paid-badge {
-        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
-        padding: 5px 12px;
-        border-radius: 20px;
+    .premium-badge {
+        background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+        padding: 4px 12px;
+        border-radius: 100px;
         font-size: 0.75rem;
         font-weight: 700;
-        color: #0a0a0f;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-        margin-left: 10px;
+        color: #000;
+        margin-left: 8px;
     }
 
-    .screenshots {
+    .screenshot-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
-        gap: 35px;
-        margin-top: 50px;
+        grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+        gap: 24px;
     }
 
     .screenshot-card {
-        background: linear-gradient(135deg, rgba(19, 19, 26, 0.95) 0%, rgba(168, 85, 247, 0.1) 100%);
-        border-radius: var(--radius);
+        border: 1px solid var(--border);
+        border-radius: 16px;
         overflow: hidden;
-        border: 2px solid rgba(168, 85, 247, 0.3);
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
-        animation: fadeInUp 0.8s ease-out;
+        transition: all 0.3s;
     }
 
     .screenshot-card:hover {
-        transform: translateY(-10px);
-        box-shadow: 0 25px 70px rgba(168, 85, 247, 0.4);
-        border-color: rgba(168, 85, 247, 0.7);
+        border-color: rgba(168, 85, 247, 0.3);
+        transform: translateY(-4px);
     }
 
     .screenshot-card img {
         width: 100%;
         height: auto;
         display: block;
-        transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        transition: transform 0.3s;
     }
 
     .screenshot-card:hover img {
-        transform: scale(1.08);
+        transform: scale(1.05);
     }
 
     .screenshot-card .caption {
-        padding: 25px;
-        background: rgba(10, 10, 15, 0.9);
+        padding: 20px;
+        background: rgba(255, 255, 255, 0.02);
         text-align: center;
-        font-weight: 700;
-        color: var(--accent3);
-        font-size: 1.05rem;
-        letter-spacing: 0.5px;
+        font-weight: 500;
+        color: var(--text-muted);
+        font-size: 0.9375rem;
     }
 
-    .discord-box {
-        background: linear-gradient(135deg, rgba(25, 25, 35, 0.95) 0%, rgba(168, 85, 247, 0.15) 100%);
-        border-radius: var(--radius);
-        padding: 60px;
+    .cta-box {
+        background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+        border: 1px solid rgba(168, 85, 247, 0.2);
+        border-radius: 16px;
+        padding: 48px;
         text-align: center;
-        border: 2px solid rgba(168, 85, 247, 0.4);
-        box-shadow: 0 0 50px rgba(168, 85, 247, 0.3);
-        backdrop-filter: blur(15px);
-        transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-        animation: fadeInUp 0.8s ease-out;
     }
 
-    .discord-box::before {
-        content: '';
-        position: absolute;
-        inset: -2px;
-        background: linear-gradient(45deg, var(--accent), var(--accent2), var(--accent3), var(--accent));
-        background-size: 400% 400%;
-        border-radius: var(--radius);
-        z-index: -1;
-        opacity: 0;
-        transition: opacity 0.5s;
-        animation: gradient-shift 6s ease infinite;
-    }
-
-    .discord-box:hover::before {
-        opacity: 1;
-    }
-
-    .discord-box:hover {
-        transform: scale(1.03);
-        box-shadow: 0 0 70px rgba(168, 85, 247, 0.5);
-    }
-
-    .discord-box p {
-        position: relative;
-        z-index: 1;
-        font-size: 1.3rem;
-        margin-bottom: 30px;
-        font-weight: 600;
-        color: #e0e0e0;
-    }
-
-    .discord-box a {
-        position: relative;
-        z-index: 1;
-        display: inline-block;
-        padding: 18px 45px;
-        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
-        color: white;
-        text-decoration: none;
-        border-radius: var(--radius);
-        font-weight: 700;
-        font-size: 1.15rem;
-        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        box-shadow: 0 8px 30px rgba(168, 85, 247, 0.5);
-        text-transform: uppercase;
-        letter-spacing: 1px;
-    }
-
-    .discord-box a:hover {
-        transform: translateY(-4px) scale(1.05);
-        box-shadow: 0 12px 40px rgba(168, 85, 247, 0.7);
+    .cta-box p {
+        color: var(--text-muted);
+        font-size: 1.0625rem;
+        margin-bottom: 24px;
     }
 
     footer {
         text-align: center;
-        padding: 50px 40px;
-        color: #9a9a9a;
-        margin-top: 50px;
-        border-top: 1px solid rgba(168, 85, 247, 0.3);
-        background: rgba(10, 10, 15, 0.5);
+        padding: 48px 5%;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border);
+        font-size: 0.9375rem;
     }
 
-    footer p {
-        margin: 5px 0;
-    }
-
-    .fade {
-        opacity: 0;
-        transform: translateY(40px);
-        transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .fade.show {
-        opacity: 1;
-        transform: translateY(0);
+    footer p + p {
+        margin-top: 8px;
+        font-size: 0.875rem;
+        opacity: 0.7;
     }
 
     @media (max-width: 768px) {
-        .hero h1 {
-            font-size: 3.5rem;
+        body {
+            cursor: auto;
         }
-        
-        .screenshots {
+
+        .cursor, .cursor-follower {
+            display: none;
+        }
+
+        nav {
+            display: none;
+        }
+
+        .button-group {
+            flex-direction: column;
+            width: 100%;
+        }
+
+        button, .btn {
+            width: 100%;
+            cursor: pointer;
+        }
+
+        .grid,
+        .screenshot-grid {
             grid-template-columns: 1fr;
-        }
-        
-        header h3 {
-            font-size: 1.3rem;
-        }
-        
-        button {
-            margin: 10px 5px;
-            padding: 14px 30px;
         }
 
         section {
-            padding: 80px 30px;
-        }
-
-        h2 {
-            font-size: 2.5rem;
+            padding: 60px 5%;
         }
 
         .comparison-table {
             overflow-x: auto;
-        }
-
-        .comparison-table tbody td:first-child {
-            padding-left: 20px;
-            font-size: 0.9rem;
-        }
-
-        .comparison-table thead th:first-child {
-            padding-left: 20px;
         }
     }
 </style>
@@ -721,139 +571,143 @@
 
 <body>
 
-<header>
+<!-- Custom Cursor -->
+<div class="cursor"></div>
+<div class="cursor-follower"></div>
+
+<!-- Animated Background -->
+<div class="bg-gradient">
+    <div class="gradient-orb" id="orb1"></div>
+    <div class="gradient-orb" id="orb2"></div>
+    <div class="gradient-orb" id="orb3"></div>
+</div>
+
+<header id="header">
     <h3>EXTA</h3>
     <nav>
         <a href="#features">Features</a>
         <a href="#pricing">Pricing</a>
         <a href="#screenshots">Screenshots</a>
         <a href="#download">Download</a>
-        <a href="#discord">Discord</a>
     </nav>
 </header>
 
-<section class="hero fade">
-    <div>
-        <br>
-        <div class="status-badge">Undetected</div>
-        <h1><span>EXTA</span></h1>
-        <p class="subtitle">Premium Roblox External Cheat</p>
-        <p>Advanced ESP, Aimbot, Character Modifications & More — Dominate any game with powerful external features.</p>
-        <div>
-            <button onclick="document.querySelector('#download').scrollIntoView({behavior:'smooth'})">
-                Download Now
-            </button>
-            <button class="secondary" onclick="document.querySelector('#features').scrollIntoView({behavior:'smooth'})">
-                View Features
-            </button>
-        </div>
+<section class="hero fade-in">
+    <div class="status-badge">Undetected</div>
+    <h1>EXTA</h1>
+    <p class="subtitle">Premium Roblox External</p>
+    <p>Advanced ESP, Aimbot, and character modifications. Dominate any game with powerful external features designed for performance and security.</p>
+    <div class="button-group">
+        <button class="primary" onclick="document.querySelector('#download').scrollIntoView({behavior:'smooth'})">
+            Download Now
+        </button>
+        <button class="secondary" onclick="document.querySelector('#features').scrollIntoView({behavior:'smooth'})">
+            View Features
+        </button>
     </div>
 </section>
 
-<section id="features" class="fade">
-    <h2>Features</h2>
-    <p class="section-subtitle">Packed with powerful tools to enhance your Roblox experience</p>
-    <div class="features">
-        <div class="feature-card">
-            <span class="feature-icon">👁️</span>
+<section id="features">
+    <h2 class="fade-in">Features</h2>
+    <p class="section-subtitle fade-in">Everything you need to enhance your experience</p>
+    <div class="grid">
+        <div class="card scale-in">
+            <span class="card-icon">👁️</span>
             <h3>Advanced ESP</h3>
             <ul>
-                <li>Player ESP with customizable boxes</li>
-                <li>Show player names & distance</li>
+                <li>Customizable player boxes</li>
+                <li>Name and distance display</li>
                 <li>Health bar indicators</li>
-                <li>Tracers to targets</li>
-                <li>Rainbow mode effect</li>
-                <li>Team check & filtering</li>
-                <li>Body part visualization</li>
-                <li>Skeleton ESP</li>
+                <li>Tracers and skeleton view</li>
+                <li>Team check filtering</li>
+                <li>Rainbow mode effects</li>
             </ul>
         </div>
 
-        <div class="feature-card">
-            <span class="feature-icon">🎯</span>
+        <div class="card scale-in">
+            <span class="card-icon">🎯</span>
             <h3>Precision Aimbot</h3>
             <ul>
                 <li>Advanced targeting system</li>
                 <li>Multiple aimbot modes</li>
-                <li>FOV circle for accuracy</li>
+                <li>FOV circle accuracy</li>
                 <li>Smooth aim transitions</li>
-                <li>Customizable hotkeys</li>
                 <li>Target priority system</li>
+                <li>Customizable hotkeys</li>
             </ul>
         </div>
 
-        <div class="feature-card">
-            <span class="feature-icon">⚙️</span>
+        <div class="card scale-in">
+            <span class="card-icon">⚙️</span>
             <h3>Character Mods</h3>
             <ul>
-                <li>WalkSpeed modification (up to 200)</li>
-                <li>Hip height adjustment (0-50)</li>
-                <li>Config save & load system</li>
-                <li>Instant configuration switching</li>
+                <li>WalkSpeed up to 200</li>
+                <li>Hip height adjustment</li>
+                <li>Config save and load</li>
                 <li>Profile management</li>
+                <li>Instant switching</li>
             </ul>
         </div>
 
-        <div class="feature-card">
-            <span class="feature-icon">🎨</span>
-            <h3>Customization</h3>
-            <ul>
-                <li>Adjustable box thickness (1-10)</li>
-                <li>Custom distance range (up to 1000)</li>
-                <li>Box style options (Corner/Full)</li>
-                <li>Gradient health bars with color picker</li>
-                <li>RGB color customization</li>
-                <li>Visual theme options</li>
-            </ul>
-        </div>
-
-        <div class="feature-card">
-            <span class="feature-icon">🛡️</span>
+        <div class="card scale-in">
+            <span class="card-icon">🛡️</span>
             <h3>Security</h3>
             <ul>
                 <li>External process injection</li>
-                <li>Undetected by anti-cheat</li>
-                <li>Regular updates & patches</li>
-                <li>Safe & stable operation</li>
+                <li>Anti-cheat undetected</li>
+                <li>Regular updates</li>
+                <li>Stable operation</li>
                 <li>No ban risk</li>
             </ul>
         </div>
 
-        <div class="feature-card">
-            <span class="feature-icon">⚡</span>
+        <div class="card scale-in">
+            <span class="card-icon">🎨</span>
+            <h3>Customization</h3>
+            <ul>
+                <li>Adjustable box thickness</li>
+                <li>Custom distance range</li>
+                <li>Box style options</li>
+                <li>RGB color picker</li>
+                <li>Visual theme options</li>
+            </ul>
+        </div>
+
+        <div class="card scale-in">
+            <span class="card-icon">⚡</span>
             <h3>Performance</h3>
             <ul>
-                <li>Lightweight & optimized</li>
+                <li>Lightweight and optimized</li>
                 <li>Low resource usage</li>
                 <li>Smooth FPS performance</li>
-                <li>Quick toggle system (HOME/END keys)</li>
-                <li>Minimal impact on gameplay</li>
+                <li>Quick toggle system</li>
+                <li>Minimal gameplay impact</li>
             </ul>
         </div>
     </div>
 </section>
 
-<section id="pricing" class="fade">
-    <h2>Free vs Paid</h2>
-    <p class="section-subtitle">Compare features and unlock premium capabilities</p>
+<section id="pricing">
+    <h2 class="fade-in">Free vs Premium</h2>
+    <p class="section-subtitle fade-in">Compare features and unlock premium capabilities</p>
     
-    <div class="comparison-table">
+    <div class="comparison-table scale-in">
         <table>
             <thead>
                 <tr>
                     <th>Feature</th>
                     <th>Free</th>
-                    <th><span class="paid-badge">👑 Premium</span></th>
+                    <th>Premium<span class="premium-badge">PRO</span></th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
-                    <td>Always up-to-date (auto updating offsets)</td>
+                    <td>Auto-updating offsets</td>
                     <td><span class="check">✓</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>Aimbot</td>
+                    <td>Basic Aimbot</td>
                     <td><span class="check">✓</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
@@ -863,52 +717,37 @@
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>Auto-Load on game switch</td>
+                    <td>Auto-load on game switch</td>
                     <td><span class="cross">✗</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>FOV changer (1 - 180) (breaks past roblox hardcap)</td>
+                    <td>FOV changer (1-180)</td>
                     <td><span class="cross">✗</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>ESP Preview</td>
+                    <td>ESP preview & config</td>
                     <td><span class="cross">✗</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>ESP More Configurations</td>
+                    <td>Config save & load</td>
                     <td><span class="cross">✗</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>Config Saving & Loading</td>
+                    <td>Silent aim</td>
                     <td><span class="cross">✗</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>FOV Options</td>
+                    <td>Player list & teleport</td>
                     <td><span class="cross">✗</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
                 <tr>
-                    <td>Silent Aim</td>
-                    <td><span class="cross">✗</span></td>
-                    <td><span class="check">✓</span></td>
-                </tr>
-                <tr>
-                    <td>Player List (Teleport)</td>
-                    <td><span class="cross">✗</span></td>
-                    <td><span class="check">✓</span></td>
-                </tr>
-                <tr>
-                    <td>WalkSpeed, JumpHeight & HipHeight Changer</td>
-                    <td><span class="cross">✗</span></td>
-                    <td><span class="check">✓</span></td>
-                </tr>
-                <tr>
-                    <td>AND MORE!</td>
+                    <td>Character modifications</td>
                     <td><span class="cross">✗</span></td>
                     <td><span class="check">✓</span></td>
                 </tr>
@@ -917,86 +756,182 @@
     </div>
 </section>
 
-<section id="screenshots" class="fade">
-    <h2>Screenshots</h2>
-    <p class="section-subtitle">See Exta in action</p>
-    <div class="screenshots">
-        <div class="screenshot-card">
-            <img src="esppage.png" alt="Exta ESP Features">
-            <div class="caption">ESP Menu - Advanced Visual Options</div>
+<section id="screenshots">
+    <h2 class="fade-in">Screenshots</h2>
+    <p class="section-subtitle fade-in">See Exta in action</p>
+    <div class="screenshot-grid">
+        <div class="screenshot-card slide-left">
+            <img src="esppage.png" alt="ESP Features">
+            <div class="caption">ESP Menu - Visual Options</div>
         </div>
-        <div class="screenshot-card">
-            <img src="miscpage.png" alt="Exta Misc Features">
-            <div class="caption">Misc Menu - Character Modifications & Config</div>
+        <div class="screenshot-card slide-right">
+            <img src="miscpage.png" alt="Misc Features">
+            <div class="caption">Misc Menu - Character Mods</div>
         </div>
-        <div class="screenshot-card">
-            <img src="demo.png" alt="Exta Demo">
-            <div class="caption">ESP Demo - What the ESP looks like as of [PRERELEASE] 1.0</div>
+        <div class="screenshot-card slide-left">
+            <img src="demo.png" alt="ESP Demo">
+            <div class="caption">ESP Demo - v1.0 Preview</div>
         </div>
     </div>
 </section>
 
-<section id="download" class="fade">
-    <h2>Get Started</h2>
-    <p class="section-subtitle">Join thousands of satisfied users</p>
-    <div class="discord-box">
-        <p>🚀 Download Exta and unlock the full potential of Roblox</p>
-        <a href="#" onclick="alert('Download link will be provided in Discord! (Release in January)'); return false;">
+<section id="download">
+    <h2 class="fade-in">Get Started</h2>
+    <p class="section-subtitle fade-in">Join thousands of satisfied users</p>
+    <div class="cta-box scale-in">
+        <p>Download Exta and unlock the full potential of your gameplay</p>
+        <button class="primary" onclick="alert('Download link will be provided in Discord! (Release in January)')">
             Download Exta v1.0
+        </button>
+    </div>
+</section>
+
+<section>
+    <h2 class="fade-in">Join Our Community</h2>
+    <p class="section-subtitle fade-in">Get support, updates, and connect with other users</p>
+    <div class="cta-box scale-in">
+        <p>Need help or want to stay updated? Join our Discord server</p>
+        <a href="https://dsc.gg/exta" target="_blank" class="btn primary">
+            Join Discord Server
         </a>
     </div>
 </section>
 
-<section id="discord" class="fade">
-    <h2>Join Our Community</h2>
-    <p class="section-subtitle">Get support, updates, and connect with other users</p>
-    <div class="discord-box">
-        <p>💬 Need help or want to stay updated? Join our Discord server!</p>
-        <a href="https://dsc.gg/exta" target="_blank">
-            Join Exta Discord Server
-        </a>
-    </div>
-</section>
-
-<footer>
+<footer class="fade-in">
     <p>© 2025 Exta External — All Rights Reserved</p>
-    <p style="margin-top: 10px; font-size: 0.9rem;">For educational purposes only. Use responsibly.</p>
+    <p>For educational purposes only. Use responsibly.</p>
 </footer>
 
 <script>
-    const fades = document.querySelectorAll('.fade');
+    // Custom Cursor
+    const cursor = document.querySelector('.cursor');
+    const cursorFollower = document.querySelector('.cursor-follower');
 
-    function reveal() {
-        const trigger = window.innerHeight * 0.85;
-        fades.forEach(el => {
-            const top = el.getBoundingClientRect().top;
-            if (top < trigger) el.classList.add('show');
-        });
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+    let followerX = 0, followerY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
+    });
+
+    function animateCursor() {
+        cursorX += (mouseX - cursorX) * 0.3;
+        cursorY += (mouseY - cursorY) * 0.3;
+        
+        followerX += (mouseX - followerX) * 0.15;
+        followerY += (mouseY - followerY) * 0.15;
+
+        cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px)`;
+        cursorFollower.style.transform = `translate(${followerX - 4}px, ${followerY - 4}px)`;
+
+        requestAnimationFrame(animateCursor);
     }
+    animateCursor();
 
-    const header = document.querySelector('header');
-    function handleScroll() {
+    // Cursor hover effects
+    const interactiveElements = document.querySelectorAll('button, a, .card');
+    interactiveElements.forEach(el => {
+        el.addEventListener('mouseenter', () => {
+            cursor.style.transform = `translate(${cursorX - 15}px, ${cursorY - 15}px) scale(1.5)`;
+            cursor.style.borderColor = '#fff';
+        });
+        el.addEventListener('mouseleave', () => {
+            cursor.style.transform = `translate(${cursorX - 10}px, ${cursorY - 10}px) scale(1)`;
+            cursor.style.borderColor = 'var(--accent)';
+        });
+    });
+
+    // Background Gradient Orbs
+    const orb1 = document.getElementById('orb1');
+    const orb2 = document.getElementById('orb2');
+    const orb3 = document.getElementById('orb3');
+
+    document.addEventListener('mousemove', (e) => {
+        const x = e.clientX;
+        const y = e.clientY;
+        const w = window.innerWidth;
+        const h = window.innerHeight;
+
+        // Orb 1 - Follows mouse closely
+        orb1.style.left = `${x}px`;
+        orb1.style.top = `${y}px`;
+        orb1.style.width = '400px';
+        orb1.style.height = '400px';
+        orb1.style.background = 'radial-gradient(circle, rgba(168, 85, 247, 0.15) 0%, transparent 70%)';
+        orb1.style.opacity = '1';
+
+        // Orb 2 - Opposite corner
+        orb2.style.left = `${w - x}px`;
+        orb2.style.top = `${h - y}px`;
+        orb2.style.width = '350px';
+        orb2.style.height = '350px';
+        orb2.style.background = 'radial-gradient(circle, rgba(124, 58, 237, 0.12) 0%, transparent 70%)';
+        orb2.style.opacity = '1';
+
+        // Orb 3 - Perpendicular position
+        orb3.style.left = `${y * (w / h)}px`;
+        orb3.style.top = `${x * (h / w)}px`;
+        orb3.style.width = '300px';
+        orb3.style.height = '300px';
+        orb3.style.background = 'radial-gradient(circle, rgba(192, 132, 252, 0.1) 0%, transparent 70%)';
+        orb3.style.opacity = '1';
+    });
+
+    // Card Mouse Effect
+    const cards = document.querySelectorAll('.card');
+    cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+            const rect = card.getBoundingClientRect();
+            const x = ((e.clientX - rect.left) / rect.width) * 100;
+            const y = ((e.clientY - rect.top) / rect.height) * 100;
+            card.style.setProperty('--mouse-x', `${x}%`);
+            card.style.setProperty('--mouse-y', `${y}%`);
+        });
+    });
+
+    // Scroll Animations
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
+        });
+    }, observerOptions);
+
+    document.querySelectorAll('.fade-in, .slide-left, .slide-right, .scale-in').forEach(el => {
+        observer.observe(el);
+    });
+
+    // Header scroll effect
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
         } else {
             header.classList.remove('scrolled');
         }
-    }
-
-    window.addEventListener('scroll', () => {
-        reveal();
-        handleScroll();
     });
-    window.addEventListener('load', reveal);
 
+    // Parallax scroll effect for hero
     window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
         const hero = document.querySelector('.hero');
+        const scrolled = window.pageYOffset;
         if (hero && scrolled < window.innerHeight) {
             hero.style.transform = `translateY(${scrolled * 0.5}px)`;
-            hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.8;
+            hero.style.opacity = 1 - (scrolled / window.innerHeight) * 0.7;
         }
     });
+
+    // Initial visibility for hero
+    document.querySelector('.hero').classList.add('visible');
+    
 </script>
 
 </body>
