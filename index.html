@@ -106,17 +106,34 @@
     }
 
     header h3 {
-        font-weight: 800;
-        letter-spacing: 3px;
-        font-size: 1.6rem;
-        background: linear-gradient(135deg, var(--accent3) 0%, var(--accent) 50%, var(--accent2) 100%);
-        background-size: 200% 200%;
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        animation: gradient-shift 6s ease infinite;
-        filter: drop-shadow(0 0 20px rgba(168, 85, 247, 0.3));
+    font-weight: 800;
+    letter-spacing: 3px;
+    font-size: 1.6rem;
+
+    /* Fallback color (important) */
+    color: #e9d5ff;
+
+    background: linear-gradient(
+        135deg,
+        #ffffff 0%,
+        var(--accent3) 30%,
+        var(--accent) 60%,
+        var(--accent2) 100%
+    );
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+
+    animation: gradient-shift 6s ease infinite;
+
+    /* THIS fixes the visibility issue */
+    text-shadow:
+        0 0 6px rgba(0, 0, 0, 0.9),
+        0 0 18px rgba(168, 85, 247, 0.7),
+        0 0 35px rgba(168, 85, 247, 0.6);
     }
+
 
     header a {
         color: var(--fg);
@@ -693,7 +710,6 @@
 
 <section class="hero fade">
     <div>
-        <img src="logo.png" alt="Exta Logo">
         <br>
         <div class="status-badge">Undetected</div>
         <h1><span>EXTA</span></h1>
