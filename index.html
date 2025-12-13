@@ -422,6 +422,85 @@
         color: #ffffff;
     }
 
+    .comparison-table {
+        max-width: 900px;
+        margin: 50px auto;
+        background: linear-gradient(135deg, rgba(19, 19, 26, 0.95) 0%, rgba(168, 85, 247, 0.05) 100%);
+        border-radius: var(--radius);
+        overflow: hidden;
+        border: 2px solid rgba(168, 85, 247, 0.3);
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    }
+
+    .comparison-table table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    .comparison-table thead {
+        background: linear-gradient(135deg, var(--accent) 0%, var(--accent2) 100%);
+    }
+
+    .comparison-table thead th {
+        padding: 25px 20px;
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: white;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .comparison-table thead th:first-child {
+        text-align: left;
+        padding-left: 40px;
+    }
+
+    .comparison-table tbody tr {
+        border-bottom: 1px solid rgba(168, 85, 247, 0.1);
+        transition: all 0.3s ease;
+    }
+
+    .comparison-table tbody tr:hover {
+        background: rgba(168, 85, 247, 0.08);
+    }
+
+    .comparison-table tbody td {
+        padding: 20px;
+        text-align: center;
+        font-size: 1rem;
+    }
+
+    .comparison-table tbody td:first-child {
+        text-align: left;
+        padding-left: 40px;
+        font-weight: 500;
+        color: #e0e0e0;
+    }
+
+    .comparison-table .check {
+        color: #22c55e;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .comparison-table .cross {
+        color: #ef4444;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .paid-badge {
+        background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #0a0a0f;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-left: 10px;
+    }
+
     .screenshots {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
@@ -582,6 +661,19 @@
         h2 {
             font-size: 2.5rem;
         }
+
+        .comparison-table {
+            overflow-x: auto;
+        }
+
+        .comparison-table tbody td:first-child {
+            padding-left: 20px;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table thead th:first-child {
+            padding-left: 20px;
+        }
     }
 </style>
 </head>
@@ -592,6 +684,7 @@
     <h3>EXTA</h3>
     <nav>
         <a href="#features">Features</a>
+        <a href="#pricing">Pricing</a>
         <a href="#screenshots">Screenshots</a>
         <a href="#download">Download</a>
         <a href="#discord">Discord</a>
@@ -697,6 +790,75 @@
                 <li>Minimal impact on gameplay</li>
             </ul>
         </div>
+    </div>
+</section>
+
+<section id="pricing" class="fade">
+    <h2>Free vs Paid</h2>
+    <p class="section-subtitle">Compare features and unlock premium capabilities</p>
+    
+    <div class="comparison-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Free</th>
+                    <th>Paid <span class="paid-badge">👑 Premium</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Always up-to-date (auto updating offsets)</td>
+                    <td><span class="check">✓</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Aimbot</td>
+                    <td><span class="check">✓</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>ESP Preview</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>ESP More Configurations</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Config Saving & Loading</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>FOV Options</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Silent Aim</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Player List (Teleport)</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>WalkSpeed, JumpHeight & HipHeight Changer</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>AND MORE!</td>
+                    <td><span class="cross">✗</span></td>
+                    <td><span class="check">✓</span></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </section>
 
